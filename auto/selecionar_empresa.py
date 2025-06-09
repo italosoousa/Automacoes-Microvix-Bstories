@@ -14,8 +14,6 @@ def selecionar_empresa(navegador: WebDriver, empresa_index: int):
         empresa_XPATH = f'(//a[@class="company-link"])[{empresa_index}]'
         espera.until(EC.element_to_be_clickable((By.XPATH, empresa_XPATH))).click()
 
-        time.sleep(15)
-
         print("🏢 Empresa selecionada com sucesso!")
 
     except Exception as e:
