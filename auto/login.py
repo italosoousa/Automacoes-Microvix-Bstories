@@ -5,7 +5,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
 
-def realizar_login(usuario, senha) -> None:
+def realizar_login(usuario, senha) -> webdriver.Chrome:
     
     # Configuração do driver
     options = webdriver.ChromeOptions()
@@ -27,12 +27,11 @@ def realizar_login(usuario, senha) -> None:
         # Seleciona o botão de entrar para confirmar
         navegador.find_element(By.ID, 'lmxta-login-btn-autenticar').click()
 
-        time.sleep(5)
-
         print("✅ Login realizado com sucesso!")
+        return navegador
 
     except Exception as e:
         print(f"❌ Erro ao fazer login: {e}")
-
-    finally:
-        navegador.quit()
+        navegador.quit()  # Fecha só em caso de erro
+        return None
+   
