@@ -21,9 +21,6 @@ def acessar_relatorio(navegador: WebDriver):
         relatorio = espera.until(EC.element_to_be_clickable((By.ID, 'linkBuscaMenu_0')))
         relatorio.click()
 
-        time.sleep(5)
-
-
         print("📄 Acesso ao relatório realizado com sucesso!")
 
     except Exception as e:
