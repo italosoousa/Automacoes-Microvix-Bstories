@@ -4,11 +4,23 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
+import os
 
 def realizar_login(usuario, senha) -> webdriver.Chrome:
     
-    # Configuração do driver
+    # Caminho da pasta de downloads no projeto
+    caminho_downloads = os.path.join(os.getcwd(), "downloads")
+    os.makedirs(caminho_downloads, exist_ok=True)
+
+    # Configuração do Chrome com redirecionamento de downloads
     options = webdriver.ChromeOptions()
+    prefs = {
+        "download.default_directory": caminho_downloads,
+        "download.prompt_for_download": False,
+        "download.directory_upgrade": True,
+        "safebrowsing.enabled": True
+    }
+    options.add_experimental_option("prefs", prefs)
     options.add_argument("--start-maximized")
     navegador = webdriver.Chrome(options=options)
     espera = WebDriverWait(navegador, 20)

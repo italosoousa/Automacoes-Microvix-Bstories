@@ -13,4 +13,4 @@ def executar_login(numeroLoja):
     navegador = realizar_login(usuario, senha)
     selecionar_empresa(navegador, codigo_loja)
     acessar_relatorio(navegador)
-    gerar_relatorios(navegador, data1, data2)
+    gerar_relatorios(navegador, data1, data2, numeroLoja)

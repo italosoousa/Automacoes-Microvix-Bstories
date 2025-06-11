@@ -5,10 +5,42 @@ from selenium.webdriver.chrome.webdriver import WebDriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import Select
 import time
+import os
+
+# Função para renomear o arquivo baixado (versão mais segura)
+def renomear_arquivo_download(nome_novo):
+    pasta_download = "downloads"
+    tempo_limite = 30  # tempo máximo de espera em segundos
+    tempo_esperado = 0
+
+    while tempo_esperado < tempo_limite:
+        arquivos = os.listdir(pasta_download)
+        arquivos_xls = [f for f in arquivos if f.endswith(".xls") and not f.endswith(".crdownload")]
+        
+        if arquivos_xls:
+            arquivos_xls.sort(key=lambda f: os.path.getmtime(os.path.join(pasta_download, f)), reverse=True)
+            nome_antigo = arquivos_xls[0]
+            caminho_antigo = os.path.join(pasta_download, nome_antigo)
+            caminho_novo = os.path.join(pasta_download, nome_novo)
+
+            try:
+                os.rename(caminho_antigo, caminho_novo)
+                print(f"✅ Arquivo renomeado para {nome_novo}")
+                return
+            except PermissionError:
+                # Arquivo ainda em uso, espera mais um pouco
+                pass
+
+        time.sleep(1)
+        tempo_esperado += 1
+
+    print("❌ Nenhum arquivo .xls disponível para renomear após o tempo limite.")
 
 
-def gerar_relatorios(navegador: WebDriver, data_inicial, data_final):
+
+def gerar_relatorios(navegador: WebDriver, data_inicial, data_final, numero_loja):
     espera = WebDriverWait(navegador, 20)
+    loja_nome = "ld" if numero_loja == 2 else "mary"
 
     visoes = [
     "COTY",
@@ -61,6 +93,11 @@ def gerar_relatorios(navegador: WebDriver, data_inicial, data_final):
             # Clica no botão para gerar o relatório
             botaoExcel = espera.until(EC.element_to_be_clickable((By.ID, 'botaoExportarXLS')))
             botaoExcel.click()
+
+            time.sleep(3)
+
+            nome_arquivo = f"{visao.lower().replace(' ', '_')}_{loja_nome}.xls"
+            renomear_arquivo_download(nome_arquivo)
 
             navegador.back()
             time.sleep(7)
