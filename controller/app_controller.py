@@ -5,10 +5,10 @@ from auto.gerar_relatorio import gerar_relatorios
 
 def executar_login(numeroLoja):
     usuario = "italo.meca"
-    senha = "@86Kizzmacca7"
+    senha = "@86Kizzmacca6"
     codigo_loja = numeroLoja
     data1 = "01/06/2025"
-    data2 = "05/06/2025"
+    data2 = "30/06/2025"
 
     navegador = realizar_login(usuario, senha)
     selecionar_empresa(navegador, codigo_loja)
