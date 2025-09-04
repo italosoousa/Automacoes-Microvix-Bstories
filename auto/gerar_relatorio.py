@@ -42,6 +42,7 @@ def gerar_relatorios(navegador: WebDriver, data_inicial, data_final, numero_loja
     espera = WebDriverWait(navegador, 20)
     loja_nome = "ld" if numero_loja == 2 else "mary"
 
+    # Nome dos fornecedores
     visoes = [
     "COTY",
     "EXCELLENCE",
